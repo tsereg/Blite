@@ -22,4 +22,5 @@
 
 #define IDM_F_EXIT				1001
 #define IDM_F_NEW               1002
+#define IDM_F_CLOSE             1003
 #define IDM_H_ABOUT				2001

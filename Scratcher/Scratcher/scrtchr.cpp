@@ -149,6 +149,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             case IDM_F_NEW:
                 OnFileNewHandler();
+                break;
+            case IDM_F_CLOSE:
+                OnFileCloseHandler();
+                break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -163,6 +167,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
+        OnFileCloseHandler();
         PostQuitMessage(0);
         break;
     default:

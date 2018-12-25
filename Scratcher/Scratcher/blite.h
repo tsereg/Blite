@@ -14,4 +14,12 @@ bool EnableDebugLayer
     (
     );
 
+bool CreateDevice
+    (
+    );
+
+void DestroyDevice
+    (
+    );
+
 }

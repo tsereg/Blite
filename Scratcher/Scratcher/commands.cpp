@@ -15,4 +15,13 @@ void OnFileNewHandler
 {
     if( !blite::EnableDebugLayer() )
         return;
+    if( !blite::CreateDevice() )
+        return;
+}
+
+void OnFileCloseHandler
+    (
+    )
+{
+    blite::DestroyDevice();
 }

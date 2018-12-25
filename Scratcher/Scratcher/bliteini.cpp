@@ -11,21 +11,66 @@
 namespace blite
 {
 
+static ID3D12Device4* m_pDevice = nullptr;
+
 bool EnableDebugLayer
     (
     )
 {
-    ID3D12Debug* pDebug = nullptr;
-
     HRESULT hr = S_OK;
-    hr = ::D3D12GetDebugInterface( __uuidof(ID3D12Debug), ( void** )&pDebug );
-    if( FAILED(hr) ) 
-        return false;
 
-    pDebug->EnableDebugLayer();
-    pDebug->Release();
+    ID3D12Debug1* pDebug = nullptr;
+    hr = ::D3D12GetDebugInterface( __uuidof(ID3D12Debug1), ( void** )&pDebug );
+    if( SUCCEEDED(hr) ) 
+    {
+        pDebug->EnableDebugLayer();
+        
+        pDebug->Release();
+    }
+    
+    return SUCCEEDED(hr);                
+}
 
-    return true;
+bool CreateDevice
+    (
+    )
+{
+    HRESULT hr = S_OK;
+
+    IDXGIFactory6* pFactory = nullptr;
+    hr = ::CreateDXGIFactory2( BLITE_DXGI_DEBUG, __uuidof(IDXGIFactory6), ( void** )&pFactory );
+    if( SUCCEEDED(hr) )
+    {
+        IDXGIAdapter4* pAdapter = nullptr;
+        hr = pFactory->EnumWarpAdapter( __uuidof(IDXGIAdapter4), ( void** )&pAdapter );
+        if( SUCCEEDED(hr) )
+        {
+            ID3D12Device4* pDevice = nullptr;
+            hr = ::D3D12CreateDevice( pAdapter, D3D_FEATURE_LEVEL_12_1, __uuidof(ID3D12Device4), ( void**)&pDevice );
+            if( SUCCEEDED(hr) )
+            {
+                pDevice->AddRef();
+                m_pDevice = pDevice;
+
+                pDevice->Release();
+            }
+            pAdapter->Release();
+        }
+        pFactory->Release();
+    }
+
+    return SUCCEEDED(hr);                
+}
+
+void DestroyDevice
+    (
+    )
+{
+    if( m_pDevice )
+    {
+        m_pDevice->Release();
+        m_pDevice = nullptr;
+    }
 }
 
 }

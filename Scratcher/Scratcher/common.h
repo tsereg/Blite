@@ -13,8 +13,13 @@
 #define NOMINMAX
 #ifdef _DEBUG
 #define D3DCOMPILE_DEBUG 1
+#define BLITE_DXGI_DEBUG DXGI_CREATE_FACTORY_DEBUG
+#else
+#define BLITE_DXGI_DEBUG 0
 #endif
 
 #include <windows.h>
 #include <d3d12.h>                      // #include <%DXSDK_DIR%Include\d3d12.h>
+#include <dxgi.h>
+#include <dxgi1_6.h>
 
