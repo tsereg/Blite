@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="scrtchr.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="commands.h" />
+    <ClInclude Include="blite.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="scrtchr.cpp" />
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="bliteini.cpp" />
+    <ClCompile Include="commands.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="scrtchr.ico">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="scrtchr.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt" />
+  </ItemGroup>
+</Project>
