@@ -16,6 +16,7 @@ bool EnableDebugLayer
 
 bool CreateDevice
     (
+        bool bUseSoftwareRenderer
     );
 
 void DestroyDevice

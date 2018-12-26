@@ -23,3 +23,4 @@
 #include <dxgi.h>
 #include <dxgi1_6.h>
 
+#include <assert.h>

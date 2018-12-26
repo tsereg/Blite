@@ -15,7 +15,7 @@ void OnFileNewHandler
 {
     if( !blite::EnableDebugLayer() )
         return;
-    if( !blite::CreateDevice() )
+    if( !blite::CreateDevice(false) && !blite::CreateDevice(true) )
         return;
 }
 
