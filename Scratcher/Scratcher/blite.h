@@ -31,4 +31,13 @@ void DestroyCommandQueue
     (
     );
 
+bool CreateSwapChain
+    (
+        HWND hWnd
+    );
+
+void DestroySwapChain
+    (
+    );
+
 }

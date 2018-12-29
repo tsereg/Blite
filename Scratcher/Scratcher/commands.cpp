@@ -11,6 +11,7 @@
 
 void OnFileNewHandler
     (
+        HWND hWnd
     )
 {
     if( !blite::EnableDebugLayer() )
@@ -22,12 +23,19 @@ void OnFileNewHandler
         blite::DestroyDevice();
         return;
     }
+    if( !blite::CreateSwapChain(hWnd) )
+    {
+        blite::DestroyCommandQueue();
+        blite::DestroyDevice();
+        return;
+    }
 }
 
 void OnFileCloseHandler
     (
     )
 {
+    blite::DestroySwapChain();
     blite::DestroyCommandQueue();
     blite::DestroyDevice();
 }

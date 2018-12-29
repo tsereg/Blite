@@ -9,6 +9,7 @@
 
 void OnFileNewHandler
     (
+        HWND hWnd
     );
 
 void OnFileCloseHandler

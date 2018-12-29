@@ -148,7 +148,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
                 break;
             case IDM_F_NEW:
-                OnFileNewHandler();
+                OnFileNewHandler(hWnd);
                 break;
             case IDM_F_CLOSE:
                 OnFileCloseHandler();

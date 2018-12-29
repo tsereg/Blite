@@ -15,6 +15,8 @@ static ID3D12Device4* m_pDevice = nullptr;
 
 static ID3D12CommandQueue* m_pCommandQueue = nullptr;
 
+static IDXGISwapChain4* m_pSwapChain = nullptr;
+
 bool EnableDebugLayer
     (
     )
@@ -117,7 +119,7 @@ bool CreateDevice
         pFactory->Release();
     }
 
-    return !!m_pDevice;
+    return m_pDevice;
 }
 
 void DestroyDevice
@@ -156,7 +158,7 @@ bool CreateCommandQueue
         pCommandQueue->Release();
     }
 
-    return !!m_pCommandQueue;    
+    return m_pCommandQueue;    
 }
 
 void DestroyCommandQueue
@@ -167,6 +169,61 @@ void DestroyCommandQueue
     {
         m_pCommandQueue->Release();
         m_pCommandQueue = nullptr;
+    }
+}
+
+bool CreateSwapChain
+    (
+        HWND hWnd
+    )
+{
+    assert( ::IsWindow(hWnd) );
+    assert( m_pCommandQueue );
+
+    DXGI_SWAP_CHAIN_DESC1 desc = {};
+    desc.BufferCount       = 2;
+    desc.Width             = 0;
+    desc.Height            = 0;
+    desc.Format            = DXGI_FORMAT_R8G8B8A8_UNORM;
+    desc.BufferUsage       = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    desc.SwapEffect        = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+    desc.SampleDesc.Count  = 1;
+
+    HRESULT hr = S_OK;
+
+    IDXGIFactory6* pFactory = nullptr;
+    hr = ::CreateDXGIFactory2( BLITE_DXGI_DEBUG, __uuidof(IDXGIFactory6), ( void** )&pFactory );
+    if( SUCCEEDED(hr) )
+    {
+        IDXGISwapChain1* pSwapChain1 = nullptr;
+        hr = pFactory->CreateSwapChainForHwnd( m_pCommandQueue, hWnd, &desc, nullptr, nullptr, &pSwapChain1 );
+        if( SUCCEEDED(hr) )
+        {
+            IDXGISwapChain4* pSwapChain4 = nullptr;
+            hr = pSwapChain1->QueryInterface( __uuidof(IDXGISwapChain4), ( void** )&pSwapChain4 );
+            if( SUCCEEDED(hr) )
+            {
+                pSwapChain4->AddRef();
+                m_pSwapChain = pSwapChain4;
+
+                pSwapChain4->Release();
+            }
+            pSwapChain1->Release();
+        }
+        pFactory->Release();
+    }
+
+    return m_pSwapChain;
+}
+
+void DestroySwapChain
+    (
+    )
+{
+    if( m_pSwapChain )
+    {
+        m_pSwapChain->Release();
+        m_pSwapChain = nullptr;
     }
 }
 
