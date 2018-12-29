@@ -13,6 +13,8 @@ namespace blite
 
 static ID3D12Device4* m_pDevice = nullptr;
 
+static ID3D12CommandQueue* m_pCommandQueue = nullptr;
+
 bool EnableDebugLayer
     (
     )
@@ -126,6 +128,45 @@ void DestroyDevice
     {
         m_pDevice->Release();
         m_pDevice = nullptr;
+    }
+}
+
+bool CreateCommandQueue
+    (
+    )
+{
+    assert( m_pDevice );
+
+    // A command queue being created is a default command queue that has a command buffer that the GPU can execute
+    // directly.
+
+    D3D12_COMMAND_QUEUE_DESC desc = {};
+    desc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+    desc.Type  = D3D12_COMMAND_LIST_TYPE_DIRECT;
+
+    ID3D12CommandQueue* pCommandQueue = nullptr;
+
+    HRESULT hr = S_OK;
+    hr = m_pDevice->CreateCommandQueue( &desc, __uuidof(ID3D12CommandQueue), ( void** )&pCommandQueue );
+    if( SUCCEEDED(hr) )
+    {
+        pCommandQueue->AddRef();
+        m_pCommandQueue = pCommandQueue;
+
+        pCommandQueue->Release();
+    }
+
+    return !!m_pCommandQueue;    
+}
+
+void DestroyCommandQueue
+    (
+    )
+{
+    if( m_pCommandQueue )
+    {
+        m_pCommandQueue->Release();
+        m_pCommandQueue = nullptr;
     }
 }
 

@@ -17,11 +17,17 @@ void OnFileNewHandler
         return;
     if( !blite::CreateDevice(false) && !blite::CreateDevice(true) )
         return;
+    if( !blite::CreateCommandQueue() )
+    {
+        blite::DestroyDevice();
+        return;
+    }
 }
 
 void OnFileCloseHandler
     (
     )
 {
+    blite::DestroyCommandQueue();
     blite::DestroyDevice();
 }

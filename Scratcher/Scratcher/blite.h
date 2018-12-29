@@ -23,4 +23,12 @@ void DestroyDevice
     (
     );
 
+bool CreateCommandQueue
+    (
+    );
+
+void DestroyCommandQueue
+    (
+    );
+
 }
